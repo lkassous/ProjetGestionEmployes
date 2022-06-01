@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"layout:decorator="template">
+<link rel="stylesheet" type="text/css"href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+<div class="col-md-6"   >
+    <div class="card">
+     <h3 class="text-center">
+       Bienvenue <strong class="username">{{ User.username }}</strong> sur votre espace personnel.
+     </h3>
+     <br>
+     <strong class="label">Nom :</strong>
+      <p>{{User.nom}}</p>
+      
+     <strong class="label">Prénom :</strong>
+     <p>{{User.prenom}}</p>
+     <strong class="label">E-Mail :</strong>
+    <p>{{User.email}}</p> 
+
+    <strong class="label" >Rôles :</strong>
+    <p >{{roles}}</p>
+    
+</div>
+  
+</div>
+</html>
+  

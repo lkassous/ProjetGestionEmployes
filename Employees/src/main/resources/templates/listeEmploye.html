@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"layout:decorator="template">
+<link rel="stylesheet" type="text/css"href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+<head>
+<meta charset="utf-8">
+<title>Liste des Employes</title>
+</head>
+<body>
+<div layout:fragment="Mycontent">
+<div class="container mt-5">
+<div class="card" style="border-color: #ffc727;">
+<div class="card-header" style="background-color: #ffc727; color: #1A5276; font-weight: bold;">
+Liste des Employés
+</div>
+<div class="card-body">
+<form th:action="@{chercherNom}" method="get">
+<label class="control-label" style="color: black; text-align: center;">Nom employé</label>
+<br>
+<input type="text" name="nomEmploye" class="form-control" th:value="${nomEmploye}"  placeholder=' Chercher par Nom' style="border-left: 5px solid #ffc727; width: 100%; " />
+ 
+ <br> 
+ <button class="btn btn-primary" type="submit" style="float:right ; background-color: white; color: #1A5276; border-color: #ffc727; "> Chercher</button>
+ </form>
+ <br>
+<form th:action="@{chercherPoste}" method="get">
+			<div class="mb-3">
+		 		<div class="from-group">
+		 			<label class="control-label" style="color: black; text-align: center;">Poste</label>
+ 					<select name="idPoste" class="form-control" style="border-left: 5px solid #ffc727; width: 100%; ">
+  						<option th:each="p:${postes}"  th:value="${p.idPoste}" th:text="${p.nomPoste}"></option>
+					</select>
+		 		</div>
+		 		<br> 		
+				<input type="submit" class="btn btn-primary" value="Chercher" style="float:right ; background-color: white; color: #1A5276; border-color: #ffc727; "> 
+			  <br>
+			</div>
+ 		</form>
+ 		<br>
+<table class="table table-striped">
+<tr style=" background-color: white; color: #1A5276; border-color: #ffc727; ">
+<th>ID</th><th>Nom Employé</th><th>Domaine</th><th>Date de naissance</th><th>Poste</th> 
+</tr>
+<tr th:each="e:${employes}">
+<td th:text="${e.idEmploye}"></td>
+<td th:text="${e.nomEmploye}"></td>
+<td th:text="${e.domaine}"></td>
+<td th:text="${e.dateNaissance}"></td>
+<td   th:if= "${!#strings.isEmpty(e.poste)}"   th:text="${e.poste.nomPoste}"></td>  
+<td   th:if= "${#strings.isEmpty(e.poste)}"     th:text="${'Pas de Poste'}"></td>    	
+<td sec:authorize="hasRole('ADMIN')"><a class="btn btn-danger" onclick="return confirm('Etes-vous sûr ?')"th:href="@{supprimerEmploye(id=${e.idEmploye},page=${currentPage},size=${size})}">Supprimer</a></td>
+<td sec:authorize="hasRole('ADMIN')"><a class="btn btn-success"th:href="@{modifierEmploye(id=${e.idEmploye})}" style="background-color: #1A5276 ; color: #ffffff">Modifier</a></td>
+</tr>
+</table>
+<ul class="nav nav-pills">
+<li th:each="page,status:${pages}" >
+<a  th:class="${status.index==currentPage?'btn btn-warning':'btn' }"th:href="@{ListeEmployes(page=${status.index}, size=${size} ) }"th:text="${status.index }"></a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"layout:decorator="template">
+<link rel="stylesheet" type="text/css"href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+<head>
+<meta charset="utf-8">
+<title>Ajout des Employes</title>
+</head>
+<body>
+<div layout:fragment="Mycontent">
+<div class="container mt-5">
+<div class="card" style="border-color: #ffc727;">
+<div class="card-header" th:if="${mode=='new'}" style="background-color: #ffc727; color: #1A5276; font-weight: bold;"> Ajouter un employé </div>
+<div class="card-header" th:if="${mode=='edit'}" style="background-color: #ffc727; color: #1A5276; font-weight: bold;">Modifier un employé</div>
+<div class="card-body">
+<form th:action="@{saveEmploye}" method="post">
+<div class="form-group">
+<label class="control-label" hidden>ID Employe :</label>
+<input type="hidden" name="idEmploye" class="form-control"th:value="${employe.idEmploye}" />
+<label class="control-label" style="color: black; text-align: center;">Nom Employé :</label>
+<input type="text" name="nomEmploye" class="form-control" th:value="${employe.nomEmploye}" style="border-left: 5px solid #ffc727; width: 100%; " />
+<span th:errors= ${employe.nomEmploye} class="text-danger"> </span>
+</div>
+<div class="form-group">
+<label class="control-label" style="color: black; text-align: center;">Domaine :</label>
+<input type="text" name="domaine" class="form-control"th:value="${employe.domaine}" style="border-left: 5px solid #ffc727; width: 100%; " />
+<span th:errors=${employe.domaine} class="text-danger"> </span>
+</div>
+<div class="form-group">
+<label class="control-label" style="color: black; text-align: center;">Date de naissance :</label>
+<input type="date" name="dateNaissance" class="form-control"th:value="${employe.dateNaissance}" style="border-left: 5px solid #ffc727; width: 100%; "/>
+<span th:errors=${employe.dateNaissance} class="text-danger"> </span>
+</div>
+<div class="form-group">
+		<label class="control-label" style="color: black; text-align: center;">Poste :</label> 
+									<select style="border-left: 5px solid #ffc727; width: 100%; "  name="poste" class="form-control" th:value="${employe.poste.idPoste}"th:if= "${!#strings.isEmpty(employe.poste)}" >
+									<option th:each="p:${postes}" th:if="${mode=='edit'}"
+										th:value="${p.idPoste}" th:text="${p.nomPoste}"
+										th:selected="${p.idPoste==employe.poste.idPoste}"></option>
+	
+									<option th:each="p:${postes}" th:if="${mode=='new'}"
+										th:value="${p.idPoste}" th:text="${p.nomPoste}"></option>
+								</select>
+								
+						
+						<!-- Pour ne pas avoir d'erreurs si la catégorie est null on ajoute ce select -->
+							<select name="poste" class="form-control" th:if= "${#strings.isEmpty(employe.poste)}" >
+								<option th:each="p:${postes}" th:value="${p.idPoste}" th:text="${p.nomPoste}"></option>
+							</select>
+							
+						</div>
+
+<div>
+
+
+<button type="submit" class="btn btn-primary" style="float:right ; background-color: white; color: #1A5276; border-color: #ffc727; ">ENREGISTRER</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

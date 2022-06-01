@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="template">
+      
+<link rel="stylesheet" type="text/css"
+	href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+<head>
+<meta charset="utf-8">
+<title>Liste des Employés</title>
+</head>
+<body>
+   <div layout:fragment="Mycontent">
+	<div class="container mt-5">
+		<div class="card"  style="border-color: #ffc727;">
+			<div class="card-header" style="background-color: #ffc727; color: #1A5276; font-weight: bold;">Liste des employés cherchés</div>
+			<div class="card-body">
+			
+ <table class="table table-striped">
+ <tr  style=" background-color: white; color: #1A5276; border-color: #ffc727; ">
+ <th>ID</th><th>Nom Employé</th><th>Domaine</th><th>Date de Naissance</th><th>Poste</th>
+  <th sec:authorize="hasRole('ADMIN')" ></th><th sec:authorize="hasRole('ADMIN')" ></th>
+ </tr> 
+ <tr th:each="p:${Employes}">
+						<td th:text="${p.idEmploye}"></td>
+						<td th:text="${p.nomEmploye}"></td>
+						 
+						<td th:text="${p.domaine}"></td> 
+						<td th:text="${p.dateNaissance}"></td>
+						<td th:text="${p.poste.nomPoste}"></td> 
+						<td sec:authorize="hasRole('ADMIN')" ><a class="btn btn-danger" onclick="return confirm('Etes-vous sûr ?')" th:href="@{supprimerEmploye(id=${p.idEmploye},page=${currentPage},size=${size})}">Supprimer</a>
+</td>
+<td sec:authorize="hasRole('ADMIN')"><a class="btn btn-success"
+th:href="@{modifierEmploye(id=${p.idEmploye})}" style="background-color: #1A5276 ; color: #ffffff">Modifier</a></td>
+</tr>
+				</table>
+				<ul class="nav nav-pills">
+					<li th:each="page,status:${pages}"><a
+						th:class="${status.index==currentPage?'btn btn-warning':'btn' }"
+						th:href="@{chercherNom(page=${status.index}, size=${size} ) }"
+						th:text="${status.index }"></a></li>
+				</ul>
+ </div>
+</div>
+</div>
+</div>
+</body>
+</html>

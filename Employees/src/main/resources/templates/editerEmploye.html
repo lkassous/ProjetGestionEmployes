@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"layout:decorator="template">
+<link rel="stylesheet" type="text/css"href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+<head>
+<meta charset="utf-8">
+<title>Ajout des Employes</title>
+</head>
+<body>
+<div layout:fragment="Mycontent">
+<div class="container mt-5">
+<div class="card">
+<div class="card-header">
+Modifier des Employes
+</div>
+<div class="card-body">
+<form th:action="@{saveEmploye}" method="post">
+<div class="form-group">
+<label class="control-label" hidden>ID Employe :</label>
+<input type="hidden" name="idEmploye" class="form-control"th:value="${employe.idEmploye}" />
+</div>
+<div class="form-group">
+<label class="control-label">Nom Employe :</label>
+<input type="text" name="nomEmploye" class="form-control"th:value="${employe.nomEmploye}" />
+
+<span th:errors= ${employe.nomEmploye} class="text-danger">
+
+</span>
+
+</div>
+<div class="form-group">
+<label class="control-label">Domaine :</label>
+<input type="text" name="domaine" class="form-control"th:value="${employe.domaine}" />
+<span th:errors=${employe.domaine} class="text-danger">
+</span>
+</div>
+<div class="form-group">
+<label class="control-label">date de naissance :</label>
+<input type="date" name="dateNaissance" class="form-control"th:value="${employe.dateNaissance}"/>
+<span th:errors=${employe.dateNaissance} class="text-danger">
+</span>
+</div>
+<div>
+<button type="submit" class="btn btn-primary">modifier</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
